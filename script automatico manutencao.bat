@@ -11,20 +11,28 @@ echo Meu Script de Manutencao em lote de Fernando Teixeira Eleuterio
 
 sfc /scannow
 
-rem Comando DISM funciona nas vers„o Win10 e 11 
+rem Comando DISM funciona nas vers√£o Win10 e 11 
 DISM /Online /Cleanup-Image /ScanHealth
 DISM /Online /Cleanup-Image /RestoreHealth
 
-rem Faz limpeza dos arquivos tempor·rios do Windows
+rem Faz limpeza dos arquivos tempor√°rios do Windows
 del c:\Windows\Temp\* /s /q
 
-rem Faz limpeza dos arquivos tempor·rios da pasta TEMP na raÌz
+rem Faz limpeza dos arquivos tempor√°rios da pasta TEMP na ra√≠z
 del /q/f/s %temp%\*
 
-rem Faz limpeza dos arquivos temporarios dos usu·rios no appdata
+rem Faz limpeza dos arquivos temporarios dos usu√°rios no appdata
 /d %%F in (C:\Users\*) do del %%F\AppData\Local\Temp\* /s /q
 
 rem defrag C: /U /V
 defrag C: -f/v
 
-shutdow -s
+rem CASO PRECISAR SOMENTE DESFRAGMENTAR COMENTE A LINHA DO CHKDSK
+rem Verifica√ß√£o e reparo do disco
+@echo off
+echo y | chkdsk C: /r /f
+
+rem reiniciar
+shutdown /r /t 0
+rem desligar
+rem shutdown /s /t 0
